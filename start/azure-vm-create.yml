@@ -1,0 +1,17 @@
+steps:
+- script: |
+    az login --service-principal -u 0cd2a780-3598-4328-8db8-8b7ba273e024 -p 7wj8Q~ZoQE19B3yHSRlA9XoXzu63nIHjCWuI8a1Z --tenant c86959ed-45e5-47f5-8ef5-308ca79916fc
+    cd $(Agent.BuildDirectory)
+  displayName: 'Azure Login'
+
+- powershell: |
+    echo "All Test Agents and DKNS are in use. Additional creation is in progress"
+    $jsonOutput = az vm list --show-details --query "[?powerState=='VM deallocated']" | Out-String | ConvertFrom-Json
+    $Agent = $jsonOutput | Where-Object { $_.name -match "Agent" } | Select-Object -ExpandProperty name
+    $dkns = $jsonOutput | Where-Object { $_.name -match "dkns" } | Select-Object -ExpandProperty name
+
+    $Agent = $Agent | Select-Object -Last 1
+    $dkns = $dkns | Select-Object -Last 1
+
+    echo "가상 머신 $Agent 확인 됨."
+    echo "가상 머신 $dkns 확인 됨."
