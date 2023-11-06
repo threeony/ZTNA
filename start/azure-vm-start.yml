@@ -47,7 +47,7 @@ steps:
     echo "DKNS IMG: $TESTIMGDKNS"
 
 
-    psexec -accepteula \\$AgentIP -u Tester -p Tester1234@! -i 1 -h cmd /C start /MIN C:/test.bat $TESTIMG $ISSUE $TEST $Agent $dkns
+    psexec -accepteula \\$AgentIP -u azureuser -p Rktkdajtls10! -i 1 -h cmd /C start /MIN C:/test.bat $TESTIMG $ISSUE $TEST $Agent $dkns
   displayName: 'Azure Start VM/Run Test(PsExec)'
   workingDirectory: $(Build.SourcesDirectory)/start
   
